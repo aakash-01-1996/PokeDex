@@ -42,7 +42,7 @@ struct PersistenceController {
     // The thing that holds the stuff (the database)
     let container: NSPersistentContainer
     
-    // Just a regular function
+    // Just a regular init function
     init(inMemory: Bool = false) {
         container = NSPersistentContainer(name: "PokeDex")
         if inMemory {
@@ -50,10 +50,11 @@ struct PersistenceController {
         }
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
-
-                fatalError("Unresolved error \(error), \(error.userInfo)")
+                print(error)
             }
         })
+        
+        container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyStoreTrump
         container.viewContext.automaticallyMergesChangesFromParent = true
     }
 }
