@@ -30,6 +30,7 @@ struct FetchedPokemon: Decodable {
         enum TypeDictionaryKeys: CodingKey {
             case type
             
+            
             enum TypeKeys: CodingKey {
                 case name
             }
