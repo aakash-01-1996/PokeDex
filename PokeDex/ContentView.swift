@@ -31,7 +31,7 @@ struct ContentView: View {
         
         // Filter by fav
         if filterByFav {
-            predicates.append(NSPredicate(format: "Favorite == %d", true))
+            predicates.append(NSPredicate(format: "favorite == %d", true))
         }
         
         // combine both
