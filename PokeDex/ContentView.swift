@@ -47,7 +47,7 @@ struct ContentView: View {
                 Text("There aren't any Pokemon yet.\nFetch some Pokemon to get started!")
             } actions: {
                 Button("Fetch Pokemon", systemImage: "antenna,radiowaves.left.right") {
-                    getPokemon()
+                    getPokemon(from: 1)
                 }
                 .buttonStyle(.borderedProminent)
             }
@@ -104,7 +104,7 @@ struct ContentView: View {
                                 Text("The fetch was interrupted!\n Fetch the rest of the pokemon.")
                             } actions: {
                                 Button("Fetch Pokemon", systemImage: "antenna,radiowaves.left.right") {
-                                    getPokemon()
+                                    getPokemon(from: pokedex.count + 1)
                                 }
                                 .buttonStyle(.borderedProminent)
                             }
@@ -139,11 +139,11 @@ struct ContentView: View {
         }
     }
     
-    private func getPokemon() {
+    private func getPokemon(from id: Int) {
         Task {
-            for id in 1..<152 {
+            for i in id..<152 {
                 do {
-                    let fetchedPokemon = try await fetcher.fetchPokemon(id)
+                    let fetchedPokemon = try await fetcher.fetchPokemon(i)
                     
                     let pokemon = Pokemon(context: viewContext)
                     pokemon.id = fetchedPokemon.id
