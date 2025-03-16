@@ -17,12 +17,12 @@ struct PokemonDetail: View {
     var body: some View {
         ScrollView {
             ZStack {
-                Image(.normalgrasselectricpoisonfairy)
+                Image(pokemon.background)
                     .resizable()
                     .scaledToFit()
                     .shadow(color: .black, radius: 6)
                 
-                AsyncImage(url: pokemon.sprite) { image in
+                AsyncImage(url: showShiny ? pokemon.shinyURL : pokemon.spriteURL) { image in
                     image
                         .interpolation(.none)
                         .resizable()
@@ -66,8 +66,26 @@ struct PokemonDetail: View {
             }
             .padding()
             
+            Text("Stats")
+                .font(.title2)
+                .padding(.bottom, -5)
+                
+            Stats(pokemon: pokemon)
+            
         }
         .navigationTitle(pokemon.name!.capitalized)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    showShiny.toggle()
+                } label: {
+                    Image(systemName: showShiny ?
+                          "wand.and.stars":
+                            "wand.and.stars.inverse")
+                    .tint(showShiny ? .yellow : .primary)
+                }
+            }
+        }
     }
 }
 
