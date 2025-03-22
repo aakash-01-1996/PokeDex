@@ -2,19 +2,35 @@
 //  PokeDexWidget.swift
 //  PokeDexWidget
 //
-//  Created by Aakash Ambodkar on 3/21/25.
+//  Created by Aakash Ambodkar
 //
 
 import WidgetKit
 import SwiftUI
+import CoreData
 
 struct Provider: TimelineProvider {
+    var randomPokemon: Pokemon {
+        var results: [Pokemon] = []
+        
+        do {
+            results = try PersistenceController.shared.container.viewContext.fetch(Pokemon.fetchRequest())
+        } catch {
+            print("Couldn't fetch: \(error)")
+        }
+        if let randomPokemon = results.randomElement() {
+            return randomPokemon
+        }
+        
+        return PersistenceController.previewPokemon
+    }
+    
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), emoji: "😀")
+        SimpleEntry.placeholder
     }
 
     func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date(), emoji: "😀")
+        let entry = SimpleEntry.placeholder
         completion(entry)
     }
 
@@ -23,36 +39,113 @@ struct Provider: TimelineProvider {
 
         // Generate a timeline consisting of five entries an hour apart, starting from the current date.
         let currentDate = Date()
-        for hourOffset in 0 ..< 5 {
-            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate, emoji: "😀")
+        for hourOffset in 0 ..< 10 {
+            let entryDate = Calendar.current.date(byAdding: .second, value: hourOffset * 5, to: currentDate)!
+            
+            let entryPokemon = randomPokemon
+            
+            let entry = SimpleEntry(
+                date: entryDate,
+                name: entryPokemon.name!,
+                types: entryPokemon.types!,
+                sprite: entryPokemon.spriteImage)
             entries.append(entry)
         }
 
         let timeline = Timeline(entries: entries, policy: .atEnd)
         completion(timeline)
     }
-
-//    func relevances() async -> WidgetRelevances<Void> {
-//        // Generate a list containing the contexts this widget is relevant in.
-//    }
 }
 
 struct SimpleEntry: TimelineEntry {
+    // Build Model here..
     let date: Date
-    let emoji: String
+    let name: String
+    let types: [String]
+    let sprite: Image
+    
+    static var placeholder: SimpleEntry {
+        SimpleEntry(date: .now,
+                    name: "bulbasaur",
+                    types: ["grass", "poison"],
+                    sprite: Image(.bulbasaur))
+    }
+    static var placeholder2: SimpleEntry {
+        SimpleEntry(date: .now,
+                    name: "mew",
+                    types: ["psychic"],
+                    sprite: Image(.mew))
+    }
 }
 
 struct PokeDexWidgetEntryView : View {
+    @Environment(\.widgetFamily) var widgetSize
     var entry: Provider.Entry
+    
+    var typesView: some View {
+        ForEach(entry.types, id: \.self) {
+            type in
+            Text(type.capitalized)
+                .font(.subheadline)
+                .fontWeight(.medium)
+                .foregroundStyle(.black)
+                .padding(.horizontal, 13)
+                .padding(.vertical, 5)
+                .background(Color(type.capitalized))
+                .clipShape(.capsule)
+                .shadow(radius: 3)
+        }
+    }
+    
+    var pokemonImage: some View {
+        entry.sprite
+            .interpolation(.none)
+            .resizable()
+            .scaledToFit()
+            .shadow(color: .black, radius: 6)
+    }
 
     var body: some View {
-        VStack {
-            Text("Time:")
-            Text(entry.date, style: .time)
-
-            Text("Emoji:")
-            Text(entry.emoji)
+        switch widgetSize {
+        case .systemMedium:
+            HStack {
+                pokemonImage
+                
+                Spacer()
+                
+                VStack(alignment: .leading) {
+                    Text(entry.name.capitalized)
+                        .font(.largeTitle)
+                        .padding(.vertical, 1)
+                    
+                    HStack {
+                        typesView
+                    }
+                }
+                .layoutPriority(1)
+                
+                Spacer()
+            }
+        case .systemLarge:
+            ZStack {
+                pokemonImage
+                
+                VStack(alignment: .leading) {
+                    Text(entry.name.capitalized)
+                        .font(.largeTitle)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.75)
+                    
+                    Spacer()
+                    
+                    HStack {
+                        Spacer()
+                        typesView
+                    }
+                }
+            }
+        default:
+            pokemonImage
         }
     }
 }
@@ -64,21 +157,36 @@ struct PokeDexWidget: Widget {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
             if #available(iOS 17.0, *) {
                 PokeDexWidgetEntryView(entry: entry)
-                    .containerBackground(.fill.tertiary, for: .widget)
+                    .foregroundStyle(.black)
+                    .containerBackground(Color(entry.types[0].capitalized), for: .widget)
             } else {
                 PokeDexWidgetEntryView(entry: entry)
                     .padding()
                     .background()
             }
         }
-        .configurationDisplayName("My Widget")
-        .description("This is an example widget.")
+        .configurationDisplayName("Pokemon")
+        .description("Catch em all!")
     }
 }
 
 #Preview(as: .systemSmall) {
     PokeDexWidget()
 } timeline: {
-    SimpleEntry(date: .now, emoji: "😀")
-    SimpleEntry(date: .now, emoji: "🤩")
+    SimpleEntry.placeholder
+    SimpleEntry.placeholder2
+}
+
+#Preview(as: .systemMedium) {
+    PokeDexWidget()
+} timeline: {
+    SimpleEntry.placeholder
+    SimpleEntry.placeholder2
+}
+
+#Preview(as: .systemLarge) {
+    PokeDexWidget()
+} timeline: {
+    SimpleEntry.placeholder
+    SimpleEntry.placeholder2
 }
