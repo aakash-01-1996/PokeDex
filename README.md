@@ -1,3 +1,21 @@
+- To the next Pokemon Master 🧢⚡️
+- Swift, Widget Kit, CoreData, SwiftData
+
+## Live Link
+https://youtube.com/shorts/gFgNz3xMiS4
+
+## Sneak Peak
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/db6b377e-dd30-41cd-840f-aa4485aeaffe" width="45%" />
+  <img src="https://github.com/user-attachments/assets/63083853-b121-4f28-b317-42b4c8f62169" width="45%" /><br><br>
+  <img src="https://github.com/user-attachments/assets/c401cde0-099e-4d82-9908-3e76cc53715e" width="45%" />
+  <img src="https://github.com/user-attachments/assets/0d13c68f-6d29-4270-8b68-e6399fa5344f" width="45%" />
+</p>
+
+
+## All Time Favorite
+
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣾⣿⣇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⢰⣤⣤⣄⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣾⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
