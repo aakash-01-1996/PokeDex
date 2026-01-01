@@ -2,7 +2,7 @@
 - Swift, Widget Kit, CoreData, SwiftData
 
 ## Live Link
-https://youtube.com/shorts/gFgNz3xMiS4
+[https://youtube.com/shorts/gFgNz3xMiS4](https://youtube.com/shorts/KeJIkdIoKH8?feature=share)
 
 ## Sneak Peak
 
